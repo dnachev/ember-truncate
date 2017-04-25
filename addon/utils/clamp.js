@@ -11,6 +11,12 @@
  */
 
 export default (function(win, doc) {
+  if (doc == null) {
+    // Temporary fix to disable ember-truncate in Node env as it requires
+    // layout functionality, which Node will never provide
+    return function noClamp() {
+    };
+  }
   var measure, text, lineWidth, pos,
     lineStart, lineCount, wordStart,
     line, lineText, wasNewLine,
@@ -243,4 +249,4 @@ export default (function(win, doc) {
     // call the callback with whether or not the text was truncated
     cb(lineCount > lineClamp);
   }; // function clamp
-}(window, document));
+}(window, window['document']));
